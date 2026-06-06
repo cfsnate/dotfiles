@@ -18,3 +18,8 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [safe]
 	directory = /workspace
+
+# Machine/work-specific settings live here (not tracked by chezmoi).
+# Git silently ignores this include if the file is absent.
+[include]
+	path = config.local
