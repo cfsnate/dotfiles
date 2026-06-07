@@ -21,7 +21,9 @@ fi
 
 # Refresh Homebrew and upgrade everything already installed before reconciling
 # the tracked list below. Failures here are non-fatal so the apply continues.
+echo "==> Refreshing Homebrew (brew update)"
 brew update || echo "⚠️  brew update failed; continuing." >&2
+echo "==> Upgrading installed packages (brew upgrade)"
 brew upgrade || echo "⚠️  brew upgrade failed; continuing." >&2
 
 # NOTE: `brew bundle` is fail-fast: one bad entry (e.g. the 1password cask's
@@ -48,17 +50,31 @@ failed=()
 # TTY-less context where a password prompt would fail with "unable to read
 # password: Input/output error".
 
+echo "==> Reconciling ${#taps[@]} tap(s)"
 for t in "${taps[@]}"; do
+    echo "  - $t"
     brew tap "$t" || failed+=("tap $t")
 done
 
+# Snapshot installed formulae/casks once rather than spawning `brew list` per
+# entry (~130 brew invocations, the slow part of a no-op apply). macOS /bin/bash
+# is 3.2 (no associative arrays), so match with grep against the captured lists.
+# Match on the bare name: brew lists tap-qualified formulae by their last path
+# component (hashicorp/tap/packer -> packer), so normalize lookups with ${f##*/}.
+installed_formulae="$(brew list --formula -1 2>/dev/null)"
+installed_casks="$(brew list --cask -1 2>/dev/null)"
+
+echo "==> Reconciling ${#formulae[@]} formula(e)"
 for f in "${formulae[@]}"; do
-    brew list --formula --versions "$f" >/dev/null 2>&1 && continue
+    grep -qxF "${f##*/}" <<< "$installed_formulae" && continue
+    echo "  ⤓ installing $f"
     brew install --formula "$f" || failed+=("brew $f")
 done
 
+echo "==> Reconciling ${#casks[@]} cask(s)"
 for c in "${casks[@]}"; do
-    brew list --cask --versions "$c" >/dev/null 2>&1 && continue
+    grep -qxF "${c##*/}" <<< "$installed_casks" && continue
+    echo "  ⤓ installing $c"
     brew install --cask "$c" || failed+=("cask $c")
 done
 
@@ -71,5 +87,7 @@ fi
 
 # Tidy up after reconciling: drop unused dependencies, then prune old versions
 # and stale download caches. Both are non-fatal so the apply still finishes.
+echo "==> Removing unused dependencies (brew autoremove)"
 brew autoremove || echo "⚠️  brew autoremove failed; continuing." >&2
+echo "==> Pruning old versions and caches (brew cleanup)"
 brew cleanup || echo "⚠️  brew cleanup failed; continuing." >&2
