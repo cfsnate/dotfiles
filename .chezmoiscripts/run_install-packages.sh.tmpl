@@ -1,6 +1,7 @@
 #!/bin/bash
-# Provision Homebrew packages. Re-runs whenever the tracked package list changes:
-# packages.yaml hash: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+# Provision Homebrew packages. Plain run_ script, so it executes on every
+# `chezmoi apply`: refreshes Homebrew, upgrades installed packages, and installs
+# any tracked packages that are missing.
 
 # On first run brew isn't on PATH yet (its shellenv is loaded by new login
 # shells, not this script). Locate it for Apple Silicon or Intel and load it.
@@ -18,12 +19,17 @@ if ! command -v brew >/dev/null 2>&1; then
     exit 1
 fi
 
-# NOTE: `brew bundle` is fail-fast — one bad entry (e.g. the 1password cask's
+# Refresh Homebrew and upgrade everything already installed before reconciling
+# the tracked list below. Failures here are non-fatal so the apply continues.
+brew update || echo "⚠️  brew update failed; continuing." >&2
+brew upgrade || echo "⚠️  brew upgrade failed; continuing." >&2
+
+# NOTE: `brew bundle` is fail-fast: one bad entry (e.g. the 1password cask's
 # checksum mismatch, or a cask needing manual approval) aborts the whole run and
 # skips every package after it. Install per entry instead so a single failure
-# can't block the other ~126 packages. Skip already-installed items (keeps
-# re-runs fast and avoids surprise upgrades), collect failures, report them, and
-# exit 0 so the rest of the chezmoi apply proceeds.
+# can't block the other ~126 packages. Skip already-installed items (the upgrade
+# above already handles updating them), collect failures, report them, and exit 0
+# so the rest of the chezmoi apply proceeds.
 
 taps=(
 {{ range .packages.brews.tap }}    {{ . | quote }}
@@ -62,3 +68,8 @@ if [ ${#failed[@]} -gt 0 ]; then
     printf '   - %s\n' "${failed[@]}" >&2
     echo "   Retry an individual item, e.g.: brew install --cask 1password" >&2
 fi
+
+# Tidy up after reconciling: drop unused dependencies, then prune old versions
+# and stale download caches. Both are non-fatal so the apply still finishes.
+brew autoremove || echo "⚠️  brew autoremove failed; continuing." >&2
+brew cleanup || echo "⚠️  brew cleanup failed; continuing." >&2

@@ -37,7 +37,7 @@ Templates use `{{ .name }}` / `{{ .email }}` from `.chezmoi.toml.tmpl` prompts a
 
 ## Key mechanisms
 
-- **Package management**: `.chezmoidata/packages.yaml` is the source of truth (taps/formulae/casks). `run_onchange_install-packages.sh.tmpl` renders it into a Brewfile and runs `brew bundle` automatically whenever the YAML changes. To install/remove a package, edit the YAML — do not `brew install` ad hoc.
+- **Package management**: `.chezmoidata/packages.yaml` is the source of truth (taps/formulae/casks). `run_install-packages.sh.tmpl` is a plain `run_` script, so it runs on every `chezmoi apply`: it does `brew update && brew upgrade`, then installs any tracked package that is missing (per-entry, not `brew bundle`, so one failure doesn't block the rest). To install/remove a package, edit the YAML; do not `brew install` ad hoc.
 - **Drift detection**: `~/.local/bin/brew-diff` (source: `dot_local/bin/executable_brew-diff`) reports installed packages missing from `packages.yaml` and vice versa.
 - **External deps**: `.chezmoiexternal.toml` clones zsh plugins/themes and tmux config into `~/.config/...` (refreshed every 168h). These are not vendored in git.
 - **Secrets**: Slack token is read from the macOS Keychain via `{{ keyring "slack_status" "token" }}` in `private_dot_slack_status.conf.tmpl`. `run_once_before_ensure-slack-token.sh` prompts for it on first apply. Rotate: `chezmoi secret keyring set --service=slack_status --user=token`. Never hardcode the token in a source file.
