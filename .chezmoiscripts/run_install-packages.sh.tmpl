@@ -50,19 +50,21 @@ failed=()
 # TTY-less context where a password prompt would fail with "unable to read
 # password: Input/output error".
 
-echo "==> Reconciling ${#taps[@]} tap(s)"
-for t in "${taps[@]}"; do
-    echo "  - $t"
-    brew tap "$t" || failed+=("tap $t")
-done
-
-# Snapshot installed formulae/casks once rather than spawning `brew list` per
-# entry (~130 brew invocations, the slow part of a no-op apply). macOS /bin/bash
+# Snapshot installed taps/formulae/casks once rather than spawning brew per
+# entry (~130 invocations, the slow part of a no-op apply). macOS /bin/bash
 # is 3.2 (no associative arrays), so match with grep against the captured lists.
-# Match on the bare name: brew lists tap-qualified formulae by their last path
-# component (hashicorp/tap/packer -> packer), so normalize lookups with ${f##*/}.
+# Match formulae on the bare name: brew lists tap-qualified formulae by their
+# last path component (hashicorp/tap/packer -> packer), so normalize with ${f##*/}.
+installed_taps="$(brew tap 2>/dev/null)"
 installed_formulae="$(brew list --formula -1 2>/dev/null)"
 installed_casks="$(brew list --cask -1 2>/dev/null)"
+
+echo "==> Reconciling ${#taps[@]} tap(s)"
+for t in "${taps[@]}"; do
+    grep -qxF "$t" <<< "$installed_taps" && continue
+    echo "  ⤓ tapping $t"
+    brew tap "$t" || failed+=("tap $t")
+done
 
 echo "==> Reconciling ${#formulae[@]} formula(e)"
 for f in "${formulae[@]}"; do
