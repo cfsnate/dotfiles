@@ -1,5 +1,5 @@
 [settings]
-python.uv_venv_auto = "source"
+python.uv_venv_auto = "create|source"
 
 [tools]
 bun = "1.3"
