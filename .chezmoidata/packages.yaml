@@ -1,6 +1,7 @@
 packages:
   brews:
     tap:
+      - "anthropics/tap"
       - "buo/cask-upgrade"
       - "hashicorp/tap"
       #- "jundot/omlx"
@@ -9,6 +10,7 @@ packages:
       - "actionlint"
       #- "ansible"
       - "argocd"
+      - "autoconf"
       - "aws-sam-cli"
       - "awscli"
       #- "awslogs"
@@ -21,6 +23,7 @@ packages:
       - "cilium-cli"
       - "cmake"
       #- "colordiff"
+      - "cosign"
       #- "ctlptl"
       - "defuddle"
       - "docker"
@@ -63,6 +66,7 @@ packages:
       #- "lazygit"
       #- "lnav"
       - "lsd"
+      - "make"
       - "mas"
       - "mise"
       #- "msitools"
@@ -77,6 +81,7 @@ packages:
       - "pkgconf"
       - "pnpm"
       - "poetry"
+      - "poppler"
       - "pre-commit"
       - "prettier"
       - "qemu"
@@ -118,6 +123,7 @@ packages:
       #- "1password"
       - "1password-cli"
       - "alcove"
+      - "ant"
       - "betterdisplay"
       - "burp-suite"
       - "claude"
