@@ -14,27 +14,34 @@
         "id": "fe305f73-0b08-407b-981c-b4c3b1415b23",
         "type": "git-branch",
         "backgroundColor": "bgBlue"
-      },
+      }
+    ],
+    [
       {
-        "id": "1",
-        "type": "model",
-        "color": "cyan"
-      },
-      {
-        "id": "df95c377-05e8-4d85-9ac3-9eaae695d5fb",
+        "id": "fdecdf8f-3ef4-4251-81fa-a0422e2fd7ac",
         "type": "context-percentage",
-        "backgroundColor": "bgBrightCyan",
+        "backgroundColor": "bgBlue",
         "metadata": {
           "display": "slider"
         }
       }
     ],
-    [],
-    []
+    [
+      {
+        "id": "724ebd85-6ce1-4d7a-b8f0-573402cc8364",
+        "type": "model",
+        "backgroundColor": "bgBrightRed"
+      },
+      {
+        "id": "d400e700-1ee6-4d81-9333-1b1a7980fcd8",
+        "type": "thinking-effort",
+        "backgroundColor": "bgBrightWhite"
+      }
+    ]
   ],
   "flexMode": "full-minus-40",
   "compactThreshold": 60,
-  "colorLevel": 2,
+  "colorLevel": 3,
   "defaultPadding": " ",
   "inheritSeparatorColors": false,
   "globalBold": false,
@@ -58,9 +65,8 @@
     "autoAlign": true,
     "continueThemeAcrossLines": true
   },
-  "defaultPadding": " ",
   "installation": {
-    "method": "auto-update",
-    "packageManager": "bun"
+    "method": "pinned",
+    "installedVersion": "2.2.22"
   }
 }
