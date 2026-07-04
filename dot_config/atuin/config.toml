@@ -1,0 +1,15 @@
+# atuin client config. Only non-defaults are set; everything else uses atuin's
+# defaults (fuzzy search, compact style, secrets_filter on, auto_sync on).
+# Sync account ("nateships") is machine-local login state, not config; run
+# `atuin login` on new machines.
+# Reference: https://docs.atuin.sh/cli/configuration/config/
+
+# brew (via chezmoi packages.yaml) owns upgrades; don't nag in the TUI.
+update_check = false
+
+# Enter runs the selected command immediately; Tab inserts it for editing.
+enter_accept = true
+
+# Adds a "workspace" filter mode: scope search to the current git repo
+# (cycle filter modes with Ctrl-R inside the search TUI).
+workspaces = true

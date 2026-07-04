@@ -76,13 +76,6 @@ export FZF_DEFAULT_OPTS="--ansi --height=40% --preview-window 'right:60%:wrap'"
 export FZF_CTRL_T_OPTS="
   --preview 'bat --color=always --style=numbers --line-range=:500 {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-# CTRL-/ toggles preview; CTRL-Y copies the command to the clipboard
-export FZF_CTRL_R_OPTS="
-  --preview 'echo {}' --preview-window up:3:hidden:wrap
-  --bind 'ctrl-/:toggle-preview'
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-  --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
 export FZF_ALT_C_OPTS="
   --preview 'tree -C {}'"
 
@@ -96,3 +89,8 @@ source $ZDOTDIR/aliases.zsh
 unalias gsd 2>/dev/null
 
 eval "$(starship init zsh)"
+
+# atuin owns Ctrl-R (must init after oh-my-zsh so it overrides the fzf plugin's
+# binding). Up-arrow stays plain zsh history; zsh still writes $HISTFILE, which
+# zsh-autosuggestions keeps reading.
+eval "$(atuin init zsh --disable-up-arrow)"

@@ -10,6 +10,7 @@ packages:
       - "actionlint"
       #- "ansible"
       - "argocd"
+      - "atuin"
       - "autoconf"
       - "aws-sam-cli"
       - "awscli"
