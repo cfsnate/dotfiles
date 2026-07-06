@@ -16,11 +16,8 @@
 
 -- Configuration
 check_interval=20 -- How often to check if you're in a meeting, in seconds
-meet_browsers = {"Dia"}
+meet_browsers = {"Zen"}
 debug_log = false -- set true to print per-tick checks to Hammerspoon console
-
--- Allow hs.application.find() to match alternate/display names (e.g. Dia).
-hs.application.enableSpotlightForNameSearches(true)
 
 local function dbg(msg)
     if debug_log then hs.console.printStyledtext(msg) end
@@ -90,31 +87,20 @@ function getAllMenuItems(app)
 end
 
 function in_meet_meeting()
-    -- Google Meet URL pattern: meet.google.com/xxx-xxxx-xxx (code has dashes)
-    -- Landing page meet.google.com/ (no code) is excluded.
+    -- Zen is Firefox-based: no AppleScript tab access, so match window titles
+    -- instead. An active Meet call titles its tab "Meet - xxx-xxxx-xxx"; the
+    -- landing page ("Google Meet") has no code and is excluded. Only detects
+    -- the call while its tab is the window's active tab.
+    -- hs.application.get() requires an exact name match of a *running* app,
+    -- so it never fuzzy-matches other apps and never launches anything.
     for _, browser in ipairs(meet_browsers) do
-        local app = hs.application.find(browser)
-        if app and app:isRunning() then
-            local script = string.format([[
-                tell application "%s"
-                    set urlList to ""
-                    try
-                        repeat with w in windows
-                            repeat with t in tabs of w
-                                set urlList to urlList & (URL of t) & linefeed
-                            end repeat
-                        end repeat
-                    end try
-                    return urlList
-                end tell
-            ]], browser)
-            local ok, result = hs.osascript.applescript(script)
-            if ok and result then
-                for url in string.gmatch(result, "[^\n]+") do
-                    if string.match(url, "meet%.google%.com/[%a%-]+%-[%a%-]+") then
-                        dbg("Google Meet tab found in " .. browser .. ": " .. url)
-                        return true
-                    end
+        local app = hs.application.get(browser)
+        if app then
+            for _, w in ipairs(app:allWindows()) do
+                local title = w:title() or ""
+                if title:sub(1, 4) == "Meet" and title:match("%l+%-%l+%-%l+") then
+                    dbg("Google Meet window found in " .. browser .. ": " .. title)
+                    return true
                 end
             end
         end
