@@ -1,0 +1,112 @@
+{
+  "env": {
+    "GIT_CONFIG_GLOBAL": "/Users/nate/.claude/gitconfig-agent",
+    "GIT_SSH_COMMAND": "ssh -F /dev/null -o IdentityFile=~/.ssh/id_ed25519_agent -o IdentitiesOnly=yes -o IdentityAgent=none -o User=git",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_ENHANCED_TELEMETRY_BETA": "1",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://k8s.orb.local:4318",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_TRACES_EXPORTER": "otlp"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "atuin hook claude-code"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "atuin hook claude-code"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "atuin hook claude-code"
+          }
+        ]
+      }
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0,
+    "refreshInterval": 10
+  },
+  "enabledPlugins": {
+    "bugbot-loop@bugbot-loop": true,
+    "caveman@caveman": true,
+    "cc-caffeine@samber": true,
+    "frontend-design@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "bugbot-loop": {
+      "source": {
+        "source": "github",
+        "repo": "ricardonunez-io/bugbot-loop"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    },
+    "samber": {
+      "source": {
+        "source": "github",
+        "repo": "samber/cc"
+      }
+    }
+  },
+  "fastMode": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
+}

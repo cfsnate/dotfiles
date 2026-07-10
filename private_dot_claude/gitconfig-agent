@@ -1,0 +1,18 @@
+# Agent identity for Claude Code sessions. Selected via GIT_CONFIG_GLOBAL in
+# ~/.claude/settings.json env; your own terminal never reads this file.
+# Inherits the human global config, then overrides identity + signing.
+[include]
+	path = ~/.gitconfig
+[user]
+	name = Nate O'Farrell
+	email = nate@nateofarrell.com
+	signingkey = ~/.ssh/id_ed25519_agent.pub
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	# Plain ssh-keygen signing with the file key; overrides any 1Password
+	# op-ssh-sign program inherited from the include above.
+	program = ssh-keygen
+	allowedSignersFile = ~/.ssh/allowed_signers_agent
+[commit]
+	gpgsign = true
