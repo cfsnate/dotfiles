@@ -3,6 +3,10 @@
 # `chezmoi apply`: refreshes Homebrew, upgrades installed packages, and installs
 # any tracked packages that are missing.
 
+# Auto-answer any y/n confirmation brew would otherwise block on (e.g. cask
+# overwrite prompts) since this runs in chezmoi's TTY-less context.
+export NONINTERACTIVE=1
+
 # On first run brew isn't on PATH yet (its shellenv is loaded by new login
 # shells, not this script). Locate it for Apple Silicon or Intel and load it.
 if ! command -v brew >/dev/null 2>&1; then
