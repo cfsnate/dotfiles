@@ -46,7 +46,6 @@ packages:
       - "git-quick-stats"
       - "git-remote-codecommit"
       - "gnu-sed"
-      - "gnupg"
       #- "gping"
       - "hadolint"
       - "hashicorp/tap/packer"
