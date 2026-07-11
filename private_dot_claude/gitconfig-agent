@@ -16,3 +16,7 @@
 	allowedSignersFile = ~/.ssh/allowed_signers_agent
 [commit]
 	gpgsign = true
+[core]
+	sshCommand = ssh -i ~/.ssh/id_ed25519_agent -o IdentitiesOnly=yes
+[url "git@github.com:"]
+	insteadOf = https://github.com/
