@@ -17,6 +17,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -76,7 +77,8 @@
     "cc-caffeine@samber": true,
     "frontend-design@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "memory-engine@memory-engine": true
   },
   "extraKnownMarketplaces": {
     "bugbot-loop": {
@@ -101,6 +103,12 @@
       "source": {
         "source": "github",
         "repo": "samber/cc"
+      }
+    },
+    "memory-engine": {
+      "source": {
+        "source": "github",
+        "repo": "timescale/memory-engine"
       }
     }
   },
