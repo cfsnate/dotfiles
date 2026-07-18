@@ -5,7 +5,7 @@ font-family = Hack Nerd Font
 font-size = 15
 font-thicken = true
 
-theme = light:GitHub Light Default,dark:GitHub Dark Dimmed
+theme = light:Ayu Light,dark:Ayu Mirage
 macos-icon = retro
 macos-option-as-alt = true
 
