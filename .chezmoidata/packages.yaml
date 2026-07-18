@@ -145,8 +145,6 @@ packages:
       - "iina"
       - "imageoptim"
       - "insta360-link-controller"
-      - "iterm2"
-      - "itermai"
       - "karabiner-elements"
       - "keka"
       - "leapp"
