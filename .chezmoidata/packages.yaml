@@ -138,6 +138,7 @@ packages:
       - "font-jetbrains-mono"
       - "font-jetbrains-mono-nerd-font"
       #- "gcloud-cli"
+      - "ghostty"
       - "google-chrome"
       - "hammerspoon"
       - "home-assistant"

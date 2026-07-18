@@ -1,0 +1,12 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config/reference
+
+font-family = Hack Nerd Font
+font-size = 15
+font-thicken = true
+
+theme = light:GitHub Light Default,dark:GitHub Dark Dimmed
+macos-icon = retro
+macos-option-as-alt = true
+
+notify-on-command-finish = unfocused
