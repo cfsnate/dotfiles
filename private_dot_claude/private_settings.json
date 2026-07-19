@@ -1,14 +1,7 @@
 {
   "env": {
     "GIT_CONFIG_GLOBAL": "/Users/nate/.claude/gitconfig-agent",
-    "GIT_SSH_COMMAND": "ssh -F /dev/null -o IdentityFile=~/.ssh/id_ed25519_agent -o IdentitiesOnly=yes -o IdentityAgent=none -o User=git",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "CLAUDE_CODE_ENHANCED_TELEMETRY_BETA": "1",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://k8s.orb.local:4318",
-    "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
-    "OTEL_LOGS_EXPORTER": "otlp",
-    "OTEL_METRICS_EXPORTER": "otlp",
-    "OTEL_TRACES_EXPORTER": "otlp"
+    "GIT_SSH_COMMAND": "ssh -F /dev/null -o IdentityFile=~/.ssh/id_ed25519_agent -o IdentitiesOnly=yes -o IdentityAgent=none -o User=git"
   },
   "attribution": {
     "commit": "",
