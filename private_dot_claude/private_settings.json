@@ -10,7 +10,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -70,8 +70,9 @@
     "cc-caffeine@samber": true,
     "frontend-design@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "memory-engine@memory-engine": true
+    "superpowers@claude-plugins-official": false,
+    "memory-engine@memory-engine": true,
+    "claude-mem@thedotmack": true
   },
   "extraKnownMarketplaces": {
     "bugbot-loop": {
@@ -103,8 +104,15 @@
         "source": "github",
         "repo": "timescale/memory-engine"
       }
+    },
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
+      }
     }
   },
+  "advisorModel": "opus",
   "fastMode": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
