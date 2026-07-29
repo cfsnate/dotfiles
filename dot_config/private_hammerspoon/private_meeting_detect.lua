@@ -42,7 +42,10 @@ end
 
 function in_zoom_meeting()
     dbg("Checking for Zoom application...")
-    local zoomApp = hs.application.find("zoom.us")
+    -- Look up by bundle ID: Zoom 7.x spawns helper processes whose names
+    -- also match "zoom.us" (e.g. "zoom.us Sidebar Web Content"), and
+    -- find()/get() can return one of those; their menus read as nil.
+    local zoomApp = hs.application.applicationsForBundleID("us.zoom.xos")[1]
 
     if zoomApp then
         dbg("Zoom application found. Retrieving all menu items...")
